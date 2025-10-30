@@ -1,9 +1,6 @@
-import { Container, SimpleGrid, Skeleton, Stack, Text, Title } from '@mantine/core';
-import { Suspense } from 'react';
-import { RoomCard } from '@/components/RoomCard';
 import { getServerSupabase } from '@/lib/supabase-server';
 import type { Database } from '@/types/database';
-import { RoomsList } from '@/components/RoomsList';
+import { HomeScreen } from '@/components/HomeScreen';
 
 async function fetchRooms() {
   const supabase = getServerSupabase();
@@ -23,15 +20,5 @@ async function fetchRooms() {
 export default async function HomePage() {
   const rooms = await fetchRooms();
 
-  return (
-    <Container size="lg" py="xl">
-      <Stack gap="md">
-        <Stack gap={4}>
-          <Title order={1}>Salas disponíveis</Title>
-          <Text c="dimmed">Escolha a sala ideal e agende em poucos cliques.</Text>
-        </Stack>
-        <RoomsList rooms={rooms} />
-      </Stack>
-    </Container>
-  );
+  return <HomeScreen rooms={rooms} />;
 }

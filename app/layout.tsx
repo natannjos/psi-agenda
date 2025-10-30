@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
+import type { ReactNode } from 'react';
+import { ColorSchemeScript } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import './globals.css';
-import { theme } from '@/lib/theme';
-import { AppHeader } from '@/components/AppHeader';
 import { getServerSupabase } from '@/lib/supabase-server';
+import { Providers } from '@/components/Providers';
 
 export const metadata: Metadata = {
   title: 'PSI Agenda',
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ children: ReactNode }>) {
   const supabase = getServerSupabase();
   const {
     data: { session }
@@ -27,11 +26,7 @@ export default async function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider theme={theme} defaultColorScheme="light">
-          <Notifications position="top-right" />
-          <AppHeader session={session} />
-          <main>{children}</main>
-        </MantineProvider>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );

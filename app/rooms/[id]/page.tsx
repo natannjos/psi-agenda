@@ -1,8 +1,7 @@
-import { Container } from '@mantine/core';
 import { notFound } from 'next/navigation';
-import { getServerSupabase } from '@/lib/supabase-server';
 import type { Metadata } from 'next';
-import { RoomDetails } from '@/components/RoomDetails';
+import { getServerSupabase } from '@/lib/supabase-server';
+import { RoomPageContent } from '@/components/RoomPageContent';
 
 interface RoomPageParams {
   params: {
@@ -46,9 +45,5 @@ export default async function RoomPage({ params }: RoomPageParams) {
     notFound();
   }
 
-  return (
-    <Container size="lg" py="xl">
-      <RoomDetails room={room} />
-    </Container>
-  );
+  return <RoomPageContent room={room} />;
 }
