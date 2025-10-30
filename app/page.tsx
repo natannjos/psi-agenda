@@ -1,8 +1,7 @@
-import { Container, Grid, Skeleton, Stack, Text, Title } from '@mantine/core';
-import { Suspense } from 'react';
-import { RoomCard } from '@/components/RoomCard';
+import { Container, Stack, Text, Title } from '@mantine/core';
 import { getServerSupabase } from '@/lib/supabase-server';
 import type { Database } from '@/types/database';
+import { RoomsList } from '@/components/RoomsList';
 
 async function fetchRooms() {
   const supabase = getServerSupabase();
@@ -19,32 +18,9 @@ async function fetchRooms() {
   return data satisfies Database['public']['Tables']['rooms']['Row'][];
 }
 
-async function RoomsList() {
+export default async function HomePage() {
   const rooms = await fetchRooms();
 
-  if (!rooms.length) {
-    return <Text c="dimmed">Nenhuma sala disponível no momento.</Text>;
-  }
-
-  return (
-    <Grid gutter="lg">
-      {rooms.map((room) => (
-        <Grid.Col key={room.id} span={{ base: 12, sm: 6, md: 4 }}>
-          <RoomCard
-            id={room.id}
-            name={room.name}
-            description={room.description}
-            capacity={room.capacity}
-            amenities={Array.isArray(room.amenities) ? (room.amenities as string[]) : []}
-            priceCents={room.price_cents}
-          />
-        </Grid.Col>
-      ))}
-    </Grid>
-  );
-}
-
-export default function HomePage() {
   return (
     <Container size="lg" py="xl">
       <Stack gap="md">
@@ -52,23 +28,8 @@ export default function HomePage() {
           <Title order={1}>Salas disponíveis</Title>
           <Text c="dimmed">Escolha a sala ideal e agende em poucos cliques.</Text>
         </Stack>
-        <Suspense fallback={<RoomsFallback />}>
-          {/* @ts-expect-error Async Server Component */}
-          <RoomsList />
-        </Suspense>
+        <RoomsList rooms={rooms} />
       </Stack>
     </Container>
-  );
-}
-
-function RoomsFallback() {
-  return (
-    <Grid gutter="lg">
-      {[1, 2, 3].map((key) => (
-        <Grid.Col key={key} span={{ base: 12, sm: 6, md: 4 }}>
-          <Skeleton height={220} radius="lg" />
-        </Grid.Col>
-      ))}
-    </Grid>
   );
 }

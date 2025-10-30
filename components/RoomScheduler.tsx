@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Button, Card, Center, Grid, Loader, Stack, Title } from '@mantine/core';
+import { Alert, Button, Card, Center, Loader, SimpleGrid, Stack, Title } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { notifications } from '@mantine/notifications';
 import { IconAlertCircle } from '@tabler/icons-react';
@@ -133,25 +133,24 @@ export function RoomScheduler({ roomId, priceCents, durationMin = 50 }: RoomSche
             Nenhum horário disponível para esta data.
           </Alert>
         ) : (
-          <Grid gutter="sm">
+          <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="sm">
             {slots.map((slot) => {
               const start = DateTime.fromISO(slot.start, { zone: USER_TIMEZONE });
               const end = DateTime.fromISO(slot.end, { zone: USER_TIMEZONE });
               return (
-                <Grid.Col key={slot.start} span={{ base: 6, sm: 4, md: 3 }}>
-                  <Button
-                    fullWidth
-                    variant="light"
-                    color="teal"
-                    onClick={() => void handleSelectSlot(slot)}
-                    disabled={loading}
-                  >
-                    {start.toFormat('HH:mm')} – {end.toFormat('HH:mm')}
-                  </Button>
-                </Grid.Col>
+                <Button
+                  key={slot.start}
+                  fullWidth
+                  variant="light"
+                  color="teal"
+                  onClick={() => void handleSelectSlot(slot)}
+                  disabled={loading}
+                >
+                  {start.toFormat('HH:mm')} – {end.toFormat('HH:mm')}
+                </Button>
               );
             })}
-          </Grid>
+          </SimpleGrid>
         )}
       </Stack>
     </Card>
