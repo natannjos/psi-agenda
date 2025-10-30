@@ -1,0 +1,4 @@
+.env
+.next/
+bun.lock
+node_modules
