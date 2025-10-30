@@ -1,14 +1,15 @@
+'use client';
+
 import { Anchor, Button, Container, Group, Header, Text } from '@mantine/core';
 import Link from 'next/link';
-import { getServerSupabase } from '@/lib/supabase-server';
+import type { Session } from '@supabase/supabase-js';
 import { SignOutButton } from '@/components/SignOutButton';
 
-export async function AppHeader() {
-  const supabase = getServerSupabase();
-  const {
-    data: { session }
-  } = await supabase.auth.getSession();
+interface AppHeaderProps {
+  session: Session | null;
+}
 
+export function AppHeader({ session }: AppHeaderProps) {
   return (
     <Header height={72} px="md">
       <Container size="lg" h="100%">

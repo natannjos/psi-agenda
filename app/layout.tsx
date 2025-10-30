@@ -6,15 +6,21 @@ import '@mantine/dates/styles.css';
 import './globals.css';
 import { theme } from '@/lib/theme';
 import { AppHeader } from '@/components/AppHeader';
+import { getServerSupabase } from '@/lib/supabase-server';
 
 export const metadata: Metadata = {
   title: 'PSI Agenda',
   description: 'Agendamento rápido de salas de psicologia'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
+  const supabase = getServerSupabase();
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
   return (
     <html lang="pt-BR">
       <head>
@@ -23,8 +29,7 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme} defaultColorScheme="light">
           <Notifications position="top-right" />
-          {/* @ts-expect-error Async Server Component */}
-          <AppHeader />
+          <AppHeader session={session} />
           <main>{children}</main>
         </MantineProvider>
       </body>
