@@ -27,19 +27,20 @@ async function RoomsList() {
   }
 
   return (
-    <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
+    <Grid gutter="lg">
       {rooms.map((room) => (
-        <RoomCard
-          key={room.id}
-          id={room.id}
-          name={room.name}
-          description={room.description}
-          capacity={room.capacity}
-          amenities={Array.isArray(room.amenities) ? (room.amenities as string[]) : []}
-          priceCents={room.price_cents}
-        />
+        <Grid.Col key={room.id} span={{ base: 12, sm: 6, md: 4 }}>
+          <RoomCard
+            id={room.id}
+            name={room.name}
+            description={room.description}
+            capacity={room.capacity}
+            amenities={Array.isArray(room.amenities) ? (room.amenities as string[]) : []}
+            priceCents={room.price_cents}
+          />
+        </Grid.Col>
       ))}
-    </SimpleGrid>
+    </Grid>
   );
 }
 
@@ -62,10 +63,12 @@ export default function HomePage() {
 
 function RoomsFallback() {
   return (
-    <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
+    <Grid gutter="lg">
       {[1, 2, 3].map((key) => (
-        <Skeleton key={key} height={220} radius="lg" />
+        <Grid.Col key={key} span={{ base: 12, sm: 6, md: 4 }}>
+          <Skeleton height={220} radius="lg" />
+        </Grid.Col>
       ))}
-    </SimpleGrid>
+    </Grid>
   );
 }
