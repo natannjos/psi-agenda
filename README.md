@@ -88,7 +88,7 @@ MVP de agendamento de salas de psicologia com foco em simplicidade, rapidez e ev
 ## E-mails
 
 - Template React Email em `emails/booking-confirmed.tsx`.
-- Envio via Resend configurado em `lib/email.ts`.
+- Envio via Resend configurado em `lib/email.tsx`.
 
 ## Scripts
 

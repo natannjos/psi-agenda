@@ -1,4 +1,8 @@
-.env
-.next/
-bun.lock
 node_modules
+.next
+.env
+.env.local
+.env.development
+.env.production
+.DS_Store
+*.log
