@@ -1,4 +1,6 @@
-import { Container, Stack, Text, Title } from '@mantine/core';
+import { Container, SimpleGrid, Skeleton, Stack, Text, Title } from '@mantine/core';
+import { Suspense } from 'react';
+import { RoomCard } from '@/components/RoomCard';
 import { getServerSupabase } from '@/lib/supabase-server';
 import type { Database } from '@/types/database';
 import { RoomsList } from '@/components/RoomsList';
